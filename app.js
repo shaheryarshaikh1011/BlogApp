@@ -117,6 +117,8 @@ app.get("/blogs/update/:id",function(req,res) {
 	
 });
 
+
+//update route
 app.post("/blogs/update/:id",function(req,res) {
 	Blog.findByIdAndUpdate(req.params.id,req.body.blog,function(err,updatedBlog) 
 	{
@@ -132,33 +134,9 @@ app.post("/blogs/update/:id",function(req,res) {
 		// body...
 	});
 	// body...
-})
-//Edit route
-/*app.get("/blogs/:id/edit",function(req,res) {
-	Blog.findById(req.params.id,function(err,foundBlog)
-	{
-		if(err)
-		{
-			res.redirect("/blogs");
-		}
-		else
-		{
-			res.render("edit",{blog:foundBlog});
-		}
-	});
-	
-	// body...
 });
 
-//UPdate route
-app.put("/blogs/:id",function(req,res) {
-	res.send("update done");
-	// body...
-})
-// title 
-// image
-// body
-// created*/
+
 
 
 
