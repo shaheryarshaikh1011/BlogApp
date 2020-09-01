@@ -39,14 +39,14 @@ app.get("/",function(req,res) {
 
 //Index route
 app.get("/blogs",function(req,res) {
-	Blog.find({},function(err,blogs) {
+	Blog.find({},function(err,foundBlogs) {
 		if(err)
 		{
 			console.log("error");
 		}
 		else
 		{
-			res.render("index",{blogs:blogs});
+			res.render("index",{blogs:foundBlogs});
 		}
 		// body...
 	});
@@ -100,7 +100,41 @@ app.get("/blogs/:id",function(req,res) {
 
 
 //Edit route
-app.get("/blogs/:id/edit",function(req,res) {
+app.get("/blogs/update/:id",function(req,res) {
+	Blog.findById(req.params.id,function(err,foundBlog) 
+	{	
+		// body...
+		if(err)
+		{
+			res.redirect("/blogs");
+		}
+		else
+		{
+			res.render("edit",{blog:foundBlog});
+
+		}
+	})
+	
+});
+
+app.post("/blogs/update/:id",function(req,res) {
+	Blog.findByIdAndUpdate(req.params.id,req.body.blog,function(err,updatedBlog) 
+	{
+		if(err)
+		{
+			res.redirect("/blogs");
+			console.log(err);
+		}
+		else
+		{
+			res.redirect("/blogs/"+req.params.id);
+		}
+		// body...
+	});
+	// body...
+})
+//Edit route
+/*app.get("/blogs/:id/edit",function(req,res) {
 	Blog.findById(req.params.id,function(err,foundBlog)
 	{
 		if(err)
@@ -124,7 +158,7 @@ app.put("/blogs/:id",function(req,res) {
 // title 
 // image
 // body
-// created
+// created*/
 
 
 
