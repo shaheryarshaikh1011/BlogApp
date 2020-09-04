@@ -1,7 +1,6 @@
 var express= 			require("express");
 	expressSanitizer=	require("express-sanitizer");
 	bodyParser=			require("body-parser");
-	methodOverride=		require("method-override");
 	mongoose=			require("mongoose");
 	app=				express();
 //app config
@@ -10,7 +9,7 @@ app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSanitizer());
-app.use(methodOverride("_method"));
+
 
 //Mongoose/model config
 var BlogSchema= new mongoose.Schema({
