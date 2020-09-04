@@ -1,13 +1,15 @@
-var express= 		require("express");
-	bodyParser=		require("body-parser");
-	methodOverride=	require("method-override");
-	mongoose=		require("mongoose");
-	app=			express();
+var express= 			require("express");
+	expressSanitizer=	require("express-sanitizer");
+	bodyParser=			require("body-parser");
+	methodOverride=		require("method-override");
+	mongoose=			require("mongoose");
+	app=				express();
 //app config
 mongoose.connect("mongodb://localhost/restful_blog_app");
 app.set("view engine","ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressSanitizer());
 app.use(methodOverride("_method"));
 
 //Mongoose/model config
@@ -65,6 +67,11 @@ app.get("/blogs/new",function(req,res) {
 //CREAte router
 app.post("/blogs",function(req,res) {
 	//create blog
+
+
+	req.body.blog.body=req.sanitize(req.body.blog.body);
+
+	
 	Blog.create(req.body.blog,function(err,newBlog) {
 		if(err)
 		{
@@ -100,7 +107,7 @@ app.get("/blogs/:id",function(req,res) {
 
 
 //Edit route
-app.get("/blogs/update/:id",function(req,res) {
+app.get("/updateblogs/:id",function(req,res) {
 	Blog.findById(req.params.id,function(err,foundBlog) 
 	{	
 		// body...
@@ -119,7 +126,8 @@ app.get("/blogs/update/:id",function(req,res) {
 
 
 //update route
-app.post("/blogs/update/:id",function(req,res) {
+app.post("/updateblogs/:id",function(req,res) {
+	req.body.blog.body=req.sanitize(req.body.blog.body);
 	Blog.findByIdAndUpdate(req.params.id,req.body.blog,function(err,updatedBlog) 
 	{
 		if(err)
@@ -134,6 +142,25 @@ app.post("/blogs/update/:id",function(req,res) {
 		// body...
 	});
 	// body...
+});
+
+
+//Delete route
+app.get("/deleteblogs/:id",function(req,res) {
+	// body...
+	//destroy blog
+	Blog.findByIdAndRemove(req.params.id,function(err) {
+		if(err)
+		{
+			res.redirect("/blogs");
+		}
+		else
+		{
+			res.redirect("/blogs");
+		}
+	})
+	//redirect
+	
 });
 
 

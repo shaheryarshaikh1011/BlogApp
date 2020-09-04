@@ -10,3 +10,15 @@ add index route and template
 add header and footer partials
 include semantic ui
 add simple nav
+
+#Routes
+index route
+new form route
+update route
+update form route
+delete route
+
+##final updates
+sanitize blog body
+style index
+update table
