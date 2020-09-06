@@ -48,6 +48,7 @@ app.get("/blogs",function(req,res) {
 		else
 		{
 			res.render("index",{blogs:foundBlogs});
+			
 		}
 		// body...
 	});

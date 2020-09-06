@@ -3,11 +3,13 @@
 	<div class="ui huge Header">
 		Blog app
 	</div>
+
+
 	<div class="ui top attached segment">
 		<div class="ui divided items">
 			<%blogs.forEach(function(blog){%>
-				<div class="item">
-					<div class="image">
+				
+					<div class="ui rounded large image">
 						<img src="<%= blog.image %>">
 					</div>
 					<div class="content">
@@ -25,7 +27,7 @@
 							</a>
 						</div>
 					<div>
-				</div>
+			
 
 			<%})%>
 
