@@ -4,6 +4,11 @@ var express= 			require("express");
 	mongoose=			require("mongoose");
 	app=				express();
 //app config
+
+
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 mongoose.connect("mongodb://localhost/restful_blog_app");
 app.set("view engine","ejs");
 app.use(express.static("public"));
@@ -21,11 +26,11 @@ var BlogSchema= new mongoose.Schema({
 
 var Blog=mongoose.model("Blog",BlogSchema);
 
- //  Blog.create({
- //  	title:"Test Blog",
- //  	image:"https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
- //  	body:"Hello this is a blogpost"	
- // });
+  Blog.create({
+ 	title:"Test Blog",
+ 	image:"https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+ 	body:"Hello this is a blogpost"	
+ });
 
 
 //ROutes
@@ -124,12 +129,24 @@ app.get("/updateblogs/:id",function(req,res) {
 	
 });
 
-
+var em=" ";
 //update route
 app.post("/updateblogs/:id",function(req,res) {
 	req.body.blog.body=req.sanitize(req.body.blog.body);
+	em=req.body.email;
+	const msg = {
+  	to: em,
+  	from: "sherishaikh2611@gmail.com",
+  	subject: 'Sending with SendGrid is Fun',
+  	text: req.body.blog.body,
+	};
+	console.log(msg);
+
+	sgMail.send(msg);
+
 	Blog.findByIdAndUpdate(req.params.id,req.body.blog,function(err,updatedBlog) 
 	{
+
 		if(err)
 		{
 			res.redirect("/blogs");
@@ -143,6 +160,7 @@ app.post("/updateblogs/:id",function(req,res) {
 	});
 	// body...
 });
+
 
 
 //Delete route
