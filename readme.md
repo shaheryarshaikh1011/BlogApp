@@ -22,3 +22,7 @@
 * sanitize blog body
 * style index
 * update table
+
+
+# site online at
+https://blogapp1011.herokuapp.com/blogs
