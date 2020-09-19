@@ -44,11 +44,3 @@ https://blogapp1011.herokuapp.com/blogs
 Give a ⭐️ if this project helped you!
 
 
-
-
-
-
-
-
-MIT © [Shaheryar Shaikh]()
-
